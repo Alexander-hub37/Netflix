@@ -6,8 +6,8 @@ use App\Models\Movie;
 use App\Models\Gender;
 use App\Models\Qualification;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-
+use App\Http\Requests\MovieRequest;
+use App\Http\Requests\QualificationRequest;
 
 class MovieController extends Controller
 {
@@ -16,7 +16,7 @@ class MovieController extends Controller
      */
     public function index()
     {
-        $movies = Movie::all();
+        $movies = Movie::with('genders')->get();
         return view('movies.index', compact('movies'));
     }
 
@@ -32,29 +32,24 @@ class MovieController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(MovieRequest $request)
     {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'banner' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'video' => 'nullable|file|mimes:mp4,avi,mov|max:10240',
-            'id_gender' => 'required|exists:genders,id',
-        ]);
+        $movie = Movie::create($request->except(['banner', 'image', 'video', 'genders']));
 
-        $movie = new Movie($validated);
-        
         if ($request->hasFile('banner')) {
             $movie->banner = $request->file('banner');
-        }
+            }
         if ($request->hasFile('image')) {
             $movie->image = $request->file('image');
-        }
+            }
         if ($request->hasFile('video')) {
             $movie->video = $request->file('video');
-        }
+            }
+            
         $movie->save();
+
+        $genders = $request->input('genders', []);
+        $movie->genders()->sync($genders);
 
         return redirect()->route('movies.index')->with('success', 'Movie created successfully.');
     }
@@ -71,18 +66,9 @@ class MovieController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Movie $movie)
+    public function update(MovieRequest $request, Movie $movie)
     {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'banner' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'video' => 'nullable|file|mimes:mp4,avi,mov|max:10240',
-            'id_gender' => 'required|exists:genders,id',
-        ]);
-
-        $movie->update($validated);
+        $movie->update($request->except(['banner', 'image', 'video', 'genders']));
 
         if ($request->hasFile('banner')) {
             $movie->banner = $request->file('banner');
@@ -95,6 +81,9 @@ class MovieController extends Controller
         }
         $movie->save();
 
+        $genders = $request->input('genders', []);
+        $movie->genders()->sync($genders);
+        
         return redirect()->route('movies.index')->with('success', 'Movie updated successfully.');
     }
 
@@ -107,6 +96,31 @@ class MovieController extends Controller
         return redirect()->route('movies.index')->with('success', 'Movie deleted successfully');
     }
 
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $movies = Movie::where('title', 'like', '%' . $query . '%')->orderBy('created_at', 'desc')->get();
+            
+        return view('browse.index', ['movies' => $movies]);
+    }
+
+    public function show(Movie $movie)
+    {
+        $averageRating = Qualification::where('movie_id', $movie->id)->avg('value');
+        return view('movies.show', compact('movie', 'averageRating'));
+    }
+
+    public function rate(QualificationRequest $request, Movie $movie)
+    {
+
+        Qualification::create([
+            'movie_id' => $movie->id,
+            'value' => $request->validated()['value'],
+        ]);
+
+        return redirect()->route('movies.show', $movie->id)->with('success', 'Thank you for your rating!');
+    }
+
     public function browse()
     {
 
@@ -116,20 +130,14 @@ class MovieController extends Controller
         $moviesByGenre = [];
 
         foreach ($genders as $gender) {
-            $moviesByGenre[$gender->name] = Movie::where('id_gender', $gender->id)->orderBy('created_at', 'desc')->take(5)->get();
+            $moviesByGenre[$gender->name] = Movie::whereHas('genders', function ($query) use ($gender) {
+                $query->where('genders.id', $gender->id);
+            })->orderBy('created_at', 'desc')->take(5)->get();     
         }
+
+        $topRatedMovies = Movie::withAvg('qualifications', 'value')->orderBy('qualifications_avg_value', 'desc')->take(5)->get();
         
-
-        return view('browse.index', compact('latestMovie', 'moviesByGenre'));
-    }
-
-
-    public function search(Request $request)
-    {
-        $query = $request->input('query');
-        $movies = Movie::where('title', 'like', '%' . $query . '%')->orderBy('created_at', 'desc')->get();
-            
-        return view('browse.index', ['movies' => $movies]);
+        return view('browse.index', compact('latestMovie', 'moviesByGenre', 'topRatedMovies'));
     }
 
 

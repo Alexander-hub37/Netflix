@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Gender;
 use Illuminate\Http\Request;
+use App\Http\Requests\GenderRequest;
 
 class GenderController extends Controller
 {
@@ -27,14 +28,9 @@ class GenderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(GenderRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|min:3|unique:genders,name',
-        ]);
-
         Gender::create($request->all());
-
         return redirect()->route('genders.index')->with('success', 'Gender created successfully.');
     }
 
@@ -57,14 +53,9 @@ class GenderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Gender $gender)
+    public function update(GenderRequest $request, Gender $gender)
     {
-        $request->validate([
-            'name' => 'required|string|min:3|unique:genders,name',
-        ]);
-
         $gender->update($request->all());
-
         return redirect()->route('genders.index')->with('success', 'Gender updated successfully.');
     }
 

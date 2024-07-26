@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Movie; 
 
 return new class extends Migration
 {
@@ -13,11 +14,9 @@ return new class extends Migration
     {
         Schema::create('qualifications', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_movie');
-            $table->enum('qualifications', ['No es para mí', 'Me gusta', 'Me encanta']);
+            $table->foreignIdFor(Movie::class)->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->integer('value');
             $table->timestamps();
-
-            $table->foreign('id_movie')->references('id')->on('movies')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -26,9 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('qualifications', function (Blueprint $table) {
-            $table->dropForeign(['id_movie']);
-        });
         Schema::dropIfExists('qualifications');
     }
 };

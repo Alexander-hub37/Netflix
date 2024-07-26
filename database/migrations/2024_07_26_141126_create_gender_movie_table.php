@@ -3,6 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Movie; 
+use App\Models\Gender;
 
 return new class extends Migration
 {
@@ -11,15 +13,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('movies', function (Blueprint $table) {
+        Schema::create('gender_movie', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('description')->nullable();
-            $table->string('banner')->nullable();
-            $table->string('image')->nullable();
-            $table->string('video')->nullable();
+            $table->foreignIdFor(Movie::class)->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignIdFor(Gender::class)->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
-
         });
     }
 
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('movies');
+        Schema::dropIfExists('gender_movie');
     }
 };

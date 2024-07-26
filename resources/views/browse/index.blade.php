@@ -44,6 +44,22 @@
 
 
     <main class="container mx-auto px-4 py-12">
+          
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-4">Top Rated Movies</h2>
+                <div class="grid grid-cols-2 md:grid-cols-1 lg:grid-cols-4 gap-5">
+                @foreach($topRatedMovies as $movie)
+                    <div class="bg-gray-800 rounded-lg overflow-hidden">
+                        <img src="{{ asset($movie->image) }}" alt="Película 1" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <h3 class="text-lg font-bold">{{ ($movie->title) }}</h3>
+                            <p cclass="text-lg font-bold">Average Rating: {{ number_format($movie->qualifications_avg_value, 2) }}</p>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+        </section>
+
         @if(isset($moviesByGenre))
         <section class="mb-12">
             @foreach($moviesByGenre as $genre => $movies)
@@ -62,8 +78,8 @@
                 @endif
             @endforeach
         </section>
-        @endif
-       
+        @endif 
+        
     </main>
 </body>
 </html>

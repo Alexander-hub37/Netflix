@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Movie extends Model
 {
@@ -18,12 +19,16 @@ class Movie extends Model
         'id_gender'
     ];
 
-    //Una pelicula tiene un genero
-    //Uno a Uno BelongsTo
-    //Anotar
-    public function gender(): belongsTo
+    //una pelicula puede tener muchos generos RECORDAR
+    public function genders(): BelongsToMany
     {
-        return $this->belongsTo(Gender::class);
+        return $this->belongsToMany(Gender::class, 'gender_movie');
+    }
+
+    //Una pelicula tiene muchas calificaciones
+    public function qualifications()
+    {
+        return $this->hasMany(Qualification::class);
     }
 
 
