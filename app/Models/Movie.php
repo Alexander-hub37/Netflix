@@ -16,7 +16,6 @@ class Movie extends Model
         'banner',
         'image',
         'video',
-        'id_gender'
     ];
 
     //una pelicula puede tener muchos generos RECORDAR
@@ -34,12 +33,20 @@ class Movie extends Model
 
     public function setBannerAttribute($value)
     {
-        $this->attributes['banner'] = $this->uploadFile($value, 'banners');
+        if ($value instanceof \Illuminate\Http\UploadedFile) {
+            $this->attributes['banner'] = $this->uploadFile($value, 'banners');
+        }else {
+            $this->attributes['banner'] = $value;
+        }
     }
 
     public function setImageAttribute($value)
     {
-        $this->attributes['image'] = $this->uploadFile($value, 'images');
+        if ($value instanceof \Illuminate\Http\UploadedFile) {
+            $this->attributes['image'] = $this->uploadFile($value, 'images');
+        } else {
+            $this->attributes['image'] = $value;
+        }
     }
 
     public function setVideoAttribute($value)
@@ -49,7 +56,7 @@ class Movie extends Model
 
     private function uploadFile($file, $folder)
     {
-        if ($file) {
+        if ($file && $file instanceof \Illuminate\Http\UploadedFile) {
             $filename = time().'_'.$file->getClientOriginalName();
             $file->storeAs('public/'.$folder, $filename);
             return 'storage/'.$folder.'/'.$filename;

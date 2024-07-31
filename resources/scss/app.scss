@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.app-container {
+    @apply container mx-auto py-10;
+}
+
+.button-primary {
+    @apply inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mb-6;
+}
+
+.table-container {
+    @apply relative overflow-x-auto shadow-md sm:rounded-lg;
+}
+
+table {
+    @apply w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400;
+
+    thead {
+        @apply text-xs text-gray-700 uppercase bg-gray-50;
+
+        th {
+            @apply px-6 py-3;
+        }
+    }
+    
+    tbody {
+    
+        tr {
+            @apply bg-white border-b bg-white border-gray-50 hover:bg-white hover:bg-gray-100;
+        }
+    
+        img {
+            @apply w-32 md:w-32 max-w-full max-h-full;
+        }
+    
+        td {
+            @apply px-6 py-4 font-semibold text-gray-900;
+        }
+    }
+}
+
+
+
+
+h1 {
+    @apply text-center mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-black;
+}
+
+.card {
+    @apply w-full bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 bg-white border-gray-100;
+}
+
+form {
+    label {
+        @apply block mb-2 text-sm font-medium text-gray-900;
+    }
+    .input-title {
+        @apply shadow-sm bg-gray-50 border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5;
+    
+        &.error {
+            @apply border-red-500;
+        }
+    
+        &.no-error {
+            @apply border-gray-300;
+        }
+    
+        @apply bg-gray-100 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500;
+    }
+    
+}
+
