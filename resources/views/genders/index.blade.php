@@ -4,10 +4,12 @@
 
 @section('content')
 <div class="app-container">
-
-    <a href="{{ route('genders.create') }}" class="button-primary">
-        Create New Genders
-    </a>
+<div class="flex items-center justify-between mb-4">
+        <a href="{{ route('genders.create') }}" class="button-primary">
+            Create New Genders
+        </a>
+        @include('components.modal')
+    </div>
     <div class="table-container">
         <table>
             <thead>

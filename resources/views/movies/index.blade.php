@@ -5,7 +5,12 @@
 @section('content')
    
 <div class="app-container">
-    <a href="{{ route('movies.create') }}" class="button-primary">Create New Movies</a>
+    <div class="flex items-center justify-between mb-4">
+        <a href="{{ route('movies.create') }}" class="button-primary">
+            Create New Movies
+        </a>
+        @include('components.modal')
+    </div>
     <div class="table-container">
         <table>
             <thead>

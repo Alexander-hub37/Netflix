@@ -51,7 +51,7 @@ class MovieController extends Controller
         $genders = $request->input('genders', []);
         $movie->genders()->sync($genders);
 
-        return redirect()->route('movies.index')->with('success', 'Movie created successfully.');
+        return redirect()->route('movies.index')->with('success', 'created')->with('message', 'Movie created successfully.');
     }
 
     /**
@@ -84,7 +84,7 @@ class MovieController extends Controller
         $genders = $request->input('genders', []);
         $movie->genders()->sync($genders);
         
-        return redirect()->route('movies.index')->with('success', 'Movie updated successfully.');
+        return redirect()->route('movies.index')->with('success', 'updated')->with('message', 'Movie updated successfully.');
     }
 
     /**
@@ -93,7 +93,7 @@ class MovieController extends Controller
     public function destroy(Movie $movie)
     {
         $movie->delete();
-        return redirect()->route('movies.index')->with('success', 'Movie deleted successfully');
+        return redirect()->route('movies.index')->with('success', 'deleted')->with('message', 'Movie deleted successfully.');
     }
 
 }
