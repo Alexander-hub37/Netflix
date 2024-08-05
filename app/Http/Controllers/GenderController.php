@@ -31,7 +31,7 @@ class GenderController extends Controller
     public function store(GenderRequest $request)
     {
         Gender::create($request->all());
-        return redirect()->route('genders.index')->with('success', 'created')->with('message', 'Gender created successfully.');
+        return redirect()->route('genders.index')->with('success', 'successful')->with('message', 'Gender created successfully.');
     }
 
     /**
@@ -56,7 +56,7 @@ class GenderController extends Controller
     public function update(GenderRequest $request, Gender $gender)
     {
         $gender->update($request->all());
-        return redirect()->route('genders.index')->with('success', 'updated')->with('message', 'Gender updated successfully.');
+        return redirect()->route('genders.index')->with('success', 'successful')->with('message', 'Gender updated successfully.');
     }
 
     /**

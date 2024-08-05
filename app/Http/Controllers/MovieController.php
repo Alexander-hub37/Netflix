@@ -51,7 +51,7 @@ class MovieController extends Controller
         $genders = $request->input('genders', []);
         $movie->genders()->sync($genders);
 
-        return redirect()->route('movies.index')->with('success', 'created')->with('message', 'Movie created successfully.');
+        return redirect()->route('movies.index')->with('success', 'successful')->with('message', 'Movie created successfully.');
     }
 
     /**
@@ -84,7 +84,7 @@ class MovieController extends Controller
         $genders = $request->input('genders', []);
         $movie->genders()->sync($genders);
         
-        return redirect()->route('movies.index')->with('success', 'updated')->with('message', 'Movie updated successfully.');
+        return redirect()->route('movies.index')->with('success', 'successful')->with('message', 'Movie updated successfully.');
     }
 
     /**

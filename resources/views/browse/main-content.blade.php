@@ -1,7 +1,5 @@
 @if(isset($latestMovie))
 <header class="relative h-screen bg-cover bg-center" style="background-image: url('{{ asset($latestMovie->banner) }}');">
-    <div class="absolute inset-0"></div>
-
     <div class="container mx-auto px-4 py-20 relative z-10" >
         <div class="max-w-lg pt-56 mt-20">
             <h2 class="text-4xl font-bold">{{ $latestMovie->title }}</h2>
@@ -18,14 +16,14 @@
 <main class="container mx-auto px-5 py-0 relative -mt-24">
     <section class="mb-12">
         <h2 class="text-2xl font-bold mb-4">Top Rated Movies</h2>
-            <div class="grid grid-cols-2 md:grid-cols-1 lg:grid-cols-4 gap-5">
-            @foreach($topRatedMovies as $movie)
-                <div class="rounded-lg overflow-hidden">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                @foreach($topRatedMovies as $movie)
+                <div>
                 <button data-modal-target="modal-{{ $movie->id }}" data-modal-toggle="modal-{{ $movie->id }}" type="button">
-                    <img src="{{ asset($movie->image) }}" class="w-full h-48 object-cover" >
+                    <img class="h-auto max-w-full rounded-lg" src="{{ asset($movie->image) }}">
                 </button>
                 </div>
-            @endforeach
+                @endforeach
             </div>
     </section>
 </main>
@@ -36,11 +34,11 @@
         @foreach($moviesByGenre as $genre => $movies)
         <h2 class="text-2xl font-bold mb-4 mt-8">{{ $genre }}</h2>
             @if($movies->count())
-            <div class="grid grid-cols-2 md:grid-cols-1 lg:grid-cols-4 gap-5 -mt-3">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
                 @foreach($movies as $movie)
-                <div class="rounded-lg overflow-hidden">
+                <div>
                 <button data-modal-target="modal-{{ $movie->id }}" data-modal-toggle="modal-{{ $movie->id }}" type="button">
-                    <img src="{{ asset($movie->image) }}" alt="Película 1" class="w-full h-48 object-cover">
+                    <img class="h-auto max-w-full rounded-lg" src="{{ asset($movie->image) }}">
                 </button>
                 </div>
                 @endforeach

@@ -33,10 +33,9 @@ class AuthController extends Controller
         if (Auth::attempt($data)) {
             if (!Auth::user()->hasVerifiedEmail()) {
 
-                Auth::logout();
-                return back()->with('error', 'Verify your email before logging in');
+                return view('verify-email');
             }
-            return redirect()->route('movies.index')->with('success', 'Successful login');
+            return redirect()->route('movies.index')->with('success', 'successful')->with('message', 'Successful login.');
         }
         return back()->with('error', 'Incorrect credentials');
     }

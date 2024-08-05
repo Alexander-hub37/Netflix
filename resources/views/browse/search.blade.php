@@ -15,13 +15,13 @@
                         @endforeach
                     </select>
 
-                    <button type="submit" class="ml-2 p-2 bg-blue-500 text-white rounded">Filtrar</button>
+                    <button type="submit" class="ml-2 p-2 bg-red-700 text-white rounded">Filtrar</button>
                 </form>
                 
-                <div class="grid grid-cols-2 md:grid-cols-1 lg:grid-cols-4 gap-5">
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
                 @foreach($movies as $movie)
-                    <div class="bg-gray-800 rounded-lg overflow-hidden">
-                        <img src="{{ asset($movie->image) }}" alt="Película 1" class="w-full h-48 object-cover">
+                    <div>
+                        <img class="h-auto max-w-full rounded-lg" src="{{ asset($movie->image) }}">
                     </div>
                 @endforeach
                 </div>
