@@ -9,18 +9,19 @@
 </head>
 <body class="bg-black text-white">
 
-    @include('browse.header')
+    <header>
+        @include('partials.browse.header')
+    </header>
 
     @if(isset($searching) && $searching)
-
-        @include('browse.search')
+        @include('partials.browse.search')
     @else
-        @include('browse.main-content')
-
-    @include('browse.modal', ['movies' => $topRatedMovies]) 
+        @include('partials.browse.main-content')
+    @include('partials.browse.modal', ['movies' => $allMovies]) 
     @endif
+
+    <footer>
+    </footer>
     @vite(['resources/js/app.js'])
-
 </body>
-
 </html>

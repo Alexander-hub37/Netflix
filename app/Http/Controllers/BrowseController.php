@@ -50,7 +50,9 @@ class BrowseController extends Controller
 
         $topRatedMovies = Movie::withAvg('qualifications', 'value')->orderBy('qualifications_avg_value', 'desc')->take(4)->get();
         
-        return view('browse.index', compact('latestMovie', 'moviesByGenre', 'topRatedMovies'));
+        $allMovies = Movie::all();
+
+        return view('browse.index', compact('latestMovie', 'moviesByGenre', 'topRatedMovies', 'allMovies'));
     }
 
     public function rate(QualificationRequest $request, Movie $movie)

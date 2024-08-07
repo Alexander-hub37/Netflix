@@ -9,8 +9,8 @@
         <p class="mt-2 text-lg md:text-xl lg:text-2xl max-w-md">{{$latestMovie->description}}</p>
       </div>
       <div class="flex space-x-4">
-        <button class="px-6 py-3 text-lg font-semibold text-black bg-white rounded-md">Reproducir</button>
-        <button class="px-6 py-3 text-lg font-semibold text-white bg-gray-700 bg-opacity-70 rounded-md">Más información</button>
+        <button class="px-6 py-3 text-lg font-semibold text-black bg-white rounded-md">Play</button>
+        <button class="px-6 py-3 text-lg font-semibold text-white bg-gray-700 bg-opacity-70 rounded-md">More information</button>
       </div>
     </div>
   </div>

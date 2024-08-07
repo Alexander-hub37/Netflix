@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(GenderSeeder::class);
         $this->call(MovieSeeder::class);
+        $this->call(UserSeeder::class);
     }
 }

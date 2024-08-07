@@ -23,7 +23,7 @@ class MovieRequest extends FormRequest
     {
         return [
             'title' => 'required|string|min:3',
-            'description' => 'nullable|string',
+            'description' => 'nullable|string|min:3',
             'banner' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'video' => 'nullable|file|mimes:mp4,avi,mov|max:10240',

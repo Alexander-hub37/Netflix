@@ -5,26 +5,29 @@
     @endif
     <div>
         <label for="title">Title</label>
-        <input type="text" id="title" name="title" value="{{ old('title', $movie->title ?? '')}}"  class="input-title @error('title') error @else no-error @enderror" placeholder="Movie title" required />
+        <input type="text" id="title" name="title" value="{{ old('title', $movie->title ?? '')}}"  class="input-app @error('title') error @else no-error @enderror" placeholder="Movie title" required />
         @error('title')
-        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+        <p class="error">{{ $message }}</p>
         @enderror
     </div>
     <div>
         <label for="description">Description</label>
-        <textarea id="description" name="description" rows="2" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 white:bg-gray-700 gray:border-gray-600 dark:placeholder-gray-400 dark:text-dark dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Leave a comment...">{{ $movie->description ?? ''}}</textarea>
+        <textarea id="description" name="description" rows="2" class="input-app @error('description') error @else no-error @enderror" placeholder="Leave a comment...">{{ $movie->description ?? ''}}</textarea>
+        @error('description')
+        <p class="error">{{ $message }}</p>
+        @enderror
     </div>
     <div>       
         <label for="banner">Upload banner</label>
-        <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none white:bg-gray-700 gray:border-gray-600 dark:placeholder-gray-400" id="banner" name="banner" type="file">
+        <input class="input-file" id="banner" name="banner" type="file">
     </div>
     <div>
         <label for="image">Upload Image</label>
-        <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none white:bg-gray-700 gray:border-gray-600 dark:placeholder-gray-400" id="image" name="image" type="file">
+        <input class="input-file" id="image" name="image" type="file">
     </div>
     <div>
         <label for="video">Upload Video</label>
-        <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none white:bg-gray-700 gray:border-gray-600 dark:placeholder-gray-400" id="video" name="video" type="file">
+        <input class="input-file" id="video" name="video" type="file">
     </div>
     <div>
         <label for="genders">Select gender(s)</label>
@@ -39,7 +42,7 @@
             @endforeach
         </div>
     </div>
-    <button type="submit" class="w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+    <button type="submit" class="button-primary w-full">
         {{ isset($movie) ? 'Update' : 'Create' }}
     </button>
 </form>
