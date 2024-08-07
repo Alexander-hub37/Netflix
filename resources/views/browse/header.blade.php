@@ -1,12 +1,15 @@
-<nav class="bg-black border-gray-200 dark:bg-gray-900">
+<nav class="bg-black">
         
-        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-            <img src="https://img.icons8.com/?size=50&id=20519&format=png&color=000000" />
+        <div class="container flex flex-wrap items-center justify-between mx-auto p-4">
+
+        <a href="" class="flex items-center">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" class="h-6 sm:h-9" alt="Netflix Logo">
+        </a>
         <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
             <form action="{{ route('browse.search') }}" method="GET" class="flex items-center mr-4">
                     <input type="text" name="query" placeholder="Search movies..." class="p-2 border rounded w-40 md:w-64 bg-black text-white placeholder-white focus:ring-2 focus:ring-red-500 focus:border-red-500">
             </form>
-            <button type="button" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+            <button type="button" class="flex text-sm bg-red-700 rounded-lg md:me-0 focus:ring-4 focus:ring-red-700" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                 <span class="sr-only">Open user menu</span>
                 <img class="w-8 h-8 rounded-full" src="https://img.icons8.com/?size=100&id=85yg4VIbT8Gd&format=png&color=000000" alt="user photo">
             </button>

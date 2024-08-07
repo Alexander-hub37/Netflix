@@ -1,50 +1,60 @@
 @if(isset($latestMovie))
-<header class="relative h-screen bg-cover bg-center" style="background-image: url('{{ asset($latestMovie->banner) }}');">
-    <div class="container mx-auto px-4 py-20 relative z-10" >
-        <div class="max-w-lg pt-56 mt-20">
-            <h2 class="text-4xl font-bold">{{ $latestMovie->title }}</h2>
-            <p class="text-lg mb-4 ">{{ $latestMovie->description }}</p>
-            <div class="flex space-x-4">
-                <a href="#" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Watch movie</a>
-                <a href="#" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">More information</a>
-            </div>
-        </div>
+
+<div class="relative h-[555px] w-full">
+  <div class="absolute inset-0 bg-cover bg-center lg:bg-[url('https://i.blogs.es/2a9439/avengers_endgame_analisis_problema_marvel/1366_2000.jpeg')] bg-[url('https://imageio.forbes.com/blogs-images/markhughes/files/2019/04/AVENGERS-ENDGAME-poster-DOLBY-CINEMA.jpg?height=1039&width=711&fit=bounds')]">
+    <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+    <div class="relative z-10 flex flex-col justify-end h-full p-6 text-left text-white">
+      <div class="mb-4">
+        <h2 class="text-2xl font-bold mb-4 mt-8">{{$latestMovie->title}}</h2>
+        <p class="mt-2 text-lg md:text-xl lg:text-2xl max-w-md">{{$latestMovie->description}}</p>
+      </div>
+      <div class="flex space-x-4">
+        <button class="px-6 py-3 text-lg font-semibold text-black bg-white rounded-md">Reproducir</button>
+        <button class="px-6 py-3 text-lg font-semibold text-white bg-gray-700 bg-opacity-70 rounded-md">Más información</button>
+      </div>
     </div>
-</header>
+  </div>
+</div>
+
 @endif
 
-<main class="container mx-auto px-5 py-0 relative -mt-24">
-    <section class="mb-12">
-        <h2 class="text-2xl font-bold mb-4">Top Rated Movies</h2>
-            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
-                @foreach($topRatedMovies as $movie)
-                <div>
-                <button data-modal-target="modal-{{ $movie->id }}" data-modal-toggle="modal-{{ $movie->id }}" type="button">
-                    <img class="h-auto max-w-full rounded-lg" src="{{ asset($movie->image) }}">
-                </button>
-                </div>
+<div class="flex flex-wrap lg:flex-nowrap">
+    <div class="w-full lg:w-5/6 order-1 lg:order-1">
+        <main class="container mx-auto bg-black px-5 -mt-5">
+            @if(isset($moviesByGenre))
+            <section class="mb-12 ">
+                @foreach($moviesByGenre as $genre => $movies)
+                <h2 class="text-2xl font-bold mb-4 mt-8">{{ $genre }}</h2>
+                    @if($movies->count())
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        @foreach($movies as $movie)
+                        <div>
+                        <button data-modal-target="modal-{{ $movie->id }}" data-modal-toggle="modal-{{ $movie->id }}" type="button">
+                            <img class="h-auto max-w-full rounded-lg" src="{{ asset($movie->image) }}">
+                        </button>
+                        </div>
+                        @endforeach
+                    </div>
+                    @endif
                 @endforeach
-            </div>
-    </section>
-</main>
-
-<main class="container mx-auto bg-black px-5 -mt-5">
-    @if(isset($moviesByGenre))
-    <section class="mb-12 ">
-        @foreach($moviesByGenre as $genre => $movies)
-        <h2 class="text-2xl font-bold mb-4 mt-8">{{ $genre }}</h2>
-            @if($movies->count())
-            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
-                @foreach($movies as $movie)
-                <div>
-                <button data-modal-target="modal-{{ $movie->id }}" data-modal-toggle="modal-{{ $movie->id }}" type="button">
-                    <img class="h-auto max-w-full rounded-lg" src="{{ asset($movie->image) }}">
-                </button>
-                </div>
-                @endforeach
-            </div>
-            @endif
-        @endforeach
-    </section>
-    @endif         
-</main>
+            </section>
+            @endif         
+        </main>
+    </div>
+    <div class="w-full lg:w-1/6 order-2 lg:order-2">
+        <main class="container mx-auto bg-black px-5 -mt-5">
+            <section class="mb-12">
+                <h2 class="text-2xl font-bold mb-4 mt-8">Top Rated</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-1">
+                        @foreach($topRatedMovies as $movie)
+                        <div>
+                        <button data-modal-target="modal-{{ $movie->id }}" data-modal-toggle="modal-{{ $movie->id }}" type="button">
+                            <img class="h-auto max-w-full rounded-lg" src="{{ asset($movie->image) }}">
+                        </button>
+                        </div>
+                        @endforeach
+                    </div>
+            </section>
+        </main>
+    </div>
+</div>
