@@ -14,7 +14,6 @@ class GenderController extends Controller
      */
     public function index()
     {
-        
         $genders = Gender::paginate(8);
         return view('genders.index', compact('genders'));
     }
@@ -58,7 +57,6 @@ class GenderController extends Controller
     public function update(GenderRequest $request, Gender $gender)
     {
         $gender->update($request->all());
-        
         return redirect()->route('genders.index')->with('success', 'successful')->with('message', 'Gender updated successfully.');
     }
 
@@ -69,5 +67,19 @@ class GenderController extends Controller
     {
         $gender->delete();
         return redirect()->route('genders.index')->with('success', 'deleted')->with('message', 'Gender deleted successfully.');
+    }
+
+    public function genresArchived()
+    {
+        $genders = Gender::onlyTrashed()->get(); 
+        return view('genders.archived', compact('genders'));
+    }
+
+    public function restore($id)
+    {
+        $gender = Gender::onlyTrashed()->find($id);
+        $gender->restore();
+
+        return redirect()->route('genders.index');
     }
 }

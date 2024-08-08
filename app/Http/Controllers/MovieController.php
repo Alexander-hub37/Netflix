@@ -26,8 +26,8 @@ class MovieController extends Controller
         if (Cache::has($key)) {
             $movies = Cache::get($key);
         } else {
-            $movies = Movie::with('genders')->paginate(5);
-            Cache::put($key, $movies);
+            $movies = Movie::with('genders')->orderBy('created_at', 'desc')->paginate(5);
+            Cache::put($key, $movies, 5);
         }
 
         return view('movies.index', compact('movies'));
@@ -117,4 +117,18 @@ class MovieController extends Controller
         return redirect()->route('movies.index')->with('success', 'deleted')->with('message', 'Movie deleted successfully.');
     }
 
+    public function moviesArchived()
+    {
+        $movies = Movie::onlyTrashed()->get();
+        return view('movies.archived', compact('movies'));
+
+    }
+
+    public function restore($id)
+    {
+        $movie = Movie::onlyTrashed()->find($id);
+        $movie->restore();
+        Cache::flush();
+        return redirect()->route('movies.index');
+    }
 }

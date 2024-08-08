@@ -5,14 +5,9 @@
 @section('content')
 <div class="container-fluid">
     <div class="flex items-center justify-between mb-4">
-        <div class="flex gap-4">
-            <a href="{{ route('movies.create') }}" class="button-primary">
-                Create New Movies
-            </a>
-            <a href="{{ route('movies.archived') }}" class="button-secondary">
-                Movies Archived
-            </a>
-        </div>
+        <a href="{{ route('movies.index') }}" class="button-primary">
+            Volver
+        </a>
         @include('components.modals.modal')
     </div>
     <div class="table-container">
@@ -39,14 +34,10 @@
                     </td>
                     <td>
                         <div class="flex">
-                            <a href="{{ route('movies.edit', $movie) }}">
-                                @include('components.icons.edit')
-                            </a> 
-                            <form action="{{ route('movies.destroy', $movie) }}" method="POST" style="display:inline;">
+                            <form action="{{ route('movies.restore', $movie->id) }}" method="POST" style="display:inline;">
                                 @csrf
-                                @method('DELETE')
                                 <button type="submit">
-                                    @include('components.icons.delete')
+                                    @include('components.icons.edit')
                                 </button>
                             </form>
                         </div>
@@ -57,6 +48,5 @@
         </table>
     </div>
     <br>
-    {{ $movies->links() }}
 </div>
 @endsection

@@ -12,11 +12,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/', function () {
         return redirect('/movies');
     });
+    Route::get('movies/archived', [MovieController::class, 'moviesArchived'])->name('movies.archived');
     Route::resource('movies', MovieController::class);
+    Route::get('genders/archived', [GenderController::class, 'genresArchived'])->name('genders.archived');
     Route::resource('genders', GenderController::class);
     Route::get('browse', [BrowseController::class, 'browse'])->name('browse.index');
     Route::get('/browse/search', [BrowseController::class, 'search'])->name('browse.search');
     Route::post('/browse/{movie}/rate', [BrowseController::class, 'rate'])->name('browse.rate');
+
+    Route::post('movies/{id}/restore', [MovieController::class, 'restore'])->name('movies.restore');
+    Route::post('genders/{id}/restore', [GenderController::class, 'restore'])->name('genders.restore');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 });

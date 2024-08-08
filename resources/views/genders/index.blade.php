@@ -5,9 +5,14 @@
 @section('content')
 <div class="container-fluid">
     <div class="flex items-center justify-between mb-4">
-        <a href="{{ route('genders.create') }}" class="button-primary">
-            Create New Genders
-        </a>
+        <div class="flex gap-4">
+            <a href="{{ route('genders.create') }}" class="button-primary">
+                Create New Genders
+            </a>
+            <a href="{{ route('genders.archived') }}" class="button-secondary">
+                Genres Archived
+            </a>
+        </div>
         @include('components.modals.modal')
     </div>
    
