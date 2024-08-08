@@ -8,6 +8,7 @@ use App\Models\Qualification;
 use Illuminate\Http\Request;
 use App\Http\Requests\MovieRequest;
 use App\Http\Requests\QualificationRequest;
+use Illuminate\Support\Facades\Cache;
 
 class MovieController extends Controller
 {
@@ -16,7 +17,19 @@ class MovieController extends Controller
      */
     public function index()
     {
-        $movies = Movie::with('genders')->get();
+        if (request()->page) {
+            $key = 'movies' . request()->page;
+        }else{
+            $key = 'movies';
+        }
+
+        if (Cache::has($key)) {
+            $movies = Cache::get($key);
+        } else {
+            $movies = Movie::with('genders')->paginate(5);
+            Cache::put($key, $movies);
+        }
+
         return view('movies.index', compact('movies'));
     }
 
@@ -51,6 +64,8 @@ class MovieController extends Controller
         $genders = $request->input('genders', []);
         $movie->genders()->sync($genders);
 
+        //Cache::forget('movies');
+        Cache::flush();
         return redirect()->route('movies.index')->with('success', 'successful')->with('message', 'Movie created successfully.');
     }
 
@@ -83,6 +98,9 @@ class MovieController extends Controller
 
         $genders = $request->input('genders', []);
         $movie->genders()->sync($genders);
+
+        //Cache::forget('movies');
+        Cache::flush();
         
         return redirect()->route('movies.index')->with('success', 'successful')->with('message', 'Movie updated successfully.');
     }
@@ -93,6 +111,9 @@ class MovieController extends Controller
     public function destroy(Movie $movie)
     {
         $movie->delete();
+
+        //Cache::forget('movies');
+        Cache::flush();
         return redirect()->route('movies.index')->with('success', 'deleted')->with('message', 'Movie deleted successfully.');
     }
 

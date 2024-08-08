@@ -30,6 +30,8 @@
             </div>
             @endforeach
     </div>
+    <br>
+    {{ $genders->links('vendor.pagination.tailwind') }}
 </div>
        
         

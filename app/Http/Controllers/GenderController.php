@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Gender;
 use Illuminate\Http\Request;
 use App\Http\Requests\GenderRequest;
+use Illuminate\Support\Facades\Cache;
 
 class GenderController extends Controller
 {
@@ -13,7 +14,8 @@ class GenderController extends Controller
      */
     public function index()
     {
-        $genders = Gender::all();
+        
+        $genders = Gender::paginate(8);
         return view('genders.index', compact('genders'));
     }
 
@@ -56,6 +58,7 @@ class GenderController extends Controller
     public function update(GenderRequest $request, Gender $gender)
     {
         $gender->update($request->all());
+        
         return redirect()->route('genders.index')->with('success', 'successful')->with('message', 'Gender updated successfully.');
     }
 

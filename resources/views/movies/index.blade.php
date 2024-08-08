@@ -51,5 +51,7 @@
             @endforeach
         </table>
     </div>
+    <br>
+    {{ $movies->links() }}
 </div>
 @endsection

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('banner')->nullable();
             $table->string('image')->nullable();
             $table->string('video')->nullable();
+            $table->softDeletes();
             $table->timestamps();
 
         });
