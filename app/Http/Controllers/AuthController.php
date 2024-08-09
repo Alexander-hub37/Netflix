@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use Illuminate\Auth\Events\Registered;
@@ -42,6 +43,7 @@ class AuthController extends Controller
 
     public function logout()
     {
+        Session::flush();
         Auth::logout();
         return redirect()->route('login')->with('success', 'Successful logout');
     }

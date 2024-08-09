@@ -5,12 +5,15 @@ namespace Database\Factories;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Carbon\Carbon;
+use App\Models\Movie;
+use App\Models\Gender;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Movie>
  */
 class MovieFactory extends Factory
 
 {
+    protected $model = Movie::class;
     /**
      * Define the model's default state.
      *
@@ -35,5 +38,14 @@ class MovieFactory extends Factory
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function (Movie $movie) {
+            $genreIds = Gender::pluck('id')->toArray();
+            $randomGenders = array_rand(array_flip($genreIds), rand(1, 10));
+            $movie->genders()->sync($randomGenders);
+        });
     }
 }

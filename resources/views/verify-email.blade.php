@@ -20,16 +20,13 @@
                 <button type="submit">    
                     <a class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300">Resend email</a>
                 </button>
-            </form>    
-            <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button type="submit">
-                <a class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-red-700 bg-white rounded-lg">
+            </form>  
+            @if(Auth::check())
+                <a href="{{ route('logout') }}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-red-700 bg-white rounded-lg">
                 Return to site
-                    @include(components.icons.arrow)
+                        @include('components.icons.arrow')
                 </a>
-            </button>
-        </form>
+            @endif  
         </div>
     </div>
 </div>
